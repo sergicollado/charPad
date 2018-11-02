@@ -1,0 +1,160 @@
+
+.input-name {
+    left: 78px;
+    top: 57px;
+    width: 255px;
+    font-size: 14px;
+}
+
+.input-description {
+    left: 35px;
+    top: 93px;
+    width: 299px;
+    height: 55px;
+    font-size: 11px;
+}
+
+.input-refresh {
+    left: 363px;
+    top: 118px;
+    width: 34px;
+    font-size: 22px;
+}
+
+.input-fate-points {
+    left: 446px;
+    top: 118px;
+    width: 34px;
+    font-size: 22px;
+}
+
+.input-aspects-0 {
+    left: 40px;
+    top: 197px;
+    width: 255px;
+    font-size: 11px;
+}
+
+.input-aspects-1 {
+    left: 40px;
+    top: 231px;
+    width: 255px;
+    font-size: 11px;
+}
+
+.input-aspects-2 {
+    left: 40px;
+    top: 263px;
+    width: 255px;
+    font-size: 11px;
+}
+
+.input-aspects-3 {
+    left: 40px;
+    top: 297px;
+    width: 255px;
+    font-size: 11px;
+}
+
+.input-aspects-4 {
+    left: 40px;
+    top: 329px;
+    width: 255px;
+    font-size: 11px;
+}
+
+.input-approaches-careful {
+    left: 433px;
+    top: 187px;
+    width: 34px;
+    font-size: 18px;
+}
+
+.input-approaches-sneaky {
+    left: 433px;
+    top: 215px;
+    width: 34px;
+    font-size: 18px;
+}
+
+.input-approaches-clever {
+    left: 433px;
+    top: 242px;
+    width: 34px;
+    font-size: 18px;
+}
+
+.input-approaches-flashy {
+    left: 433px;
+    top: 270px;
+    width: 34px;
+    font-size: 18px;
+}
+
+.input-approaches-quick {
+    left: 433px;
+    top: 296px;
+    width: 34px;
+    font-size: 18px;
+}
+
+.input-approaches-forceful {
+    left: 433px;
+    top: 324px;
+    width: 34px;
+    font-size: 18px;
+}
+
+.input-stunts {
+    left: 35px;
+    top: 384px;
+    width: 468px;
+    height: 231px;
+    font-size: 12px;
+}
+
+.input-stress-0 {
+    left: 53px;
+    top: 669px;
+}
+
+.input-stress-1 {
+    left: 119px;
+    top: 669px;
+}
+
+.input-stress-2 {
+    left: 183px;
+    top: 669px;
+}
+
+.input-consequences-mild {
+    left: 255px;
+    top: 655px;
+    width: 247px;
+    font-size: 11px;
+}
+
+.input-consequences-moderate {
+    left: 255px;
+    top: 688px;
+    width: 247px;
+    font-size: 11px;
+}
+
+.input-consequences-severe {
+    left: 255px;
+    top: 721px;
+    width: 247px;
+    font-size: 11px;
+}
+.form-container {
+    left:0px;
+    position: relative;
+    input, ion-checkbox, ion-textarea {
+        position: absolute;
+        z-index: 9999;
+        // border: none;
+        // background: none;
+    }
+}

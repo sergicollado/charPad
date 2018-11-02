@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>players</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-segment (ionChange)="changePlayer($event)">
+      <ion-segment-button *ngFor="let player  of players" [value]="player.id" [checked]="isCurrentPlayer(player.id)">
+        {{player.name}} 
+      </ion-segment-button>
+  </ion-segment>
+
+  <ion-fab vertical="top" horizontal="end" edge slot="fixed">
+      <ion-fab-button (click)="addPlayer()">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <app-character-sheet [player]="player" *ngFor="let player of players" [hidden]="!isCurrentPlayer(player.id)">
+    </app-character-sheet>
+</ion-content>
