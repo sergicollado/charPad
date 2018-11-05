@@ -5,9 +5,18 @@ import { Party, PartyList } from '../models/party';
   providedIn: 'root'
 })
 export class PartyService {
-  partyList: PartyList = {};
+  partyList: PartyList = new PartyList();
+
+  currentParty: Party;
 
   get (partyId: string) {
     return this.partyList[partyId];
   }
+
+  newParty(id, game, players) {
+    const party = new Party(id, game, players);
+    this.partyList.parties.push(party);
+    this.currentParty = party;
+  }
+
 }

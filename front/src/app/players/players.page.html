@@ -16,6 +16,7 @@
         <ion-icon name="add"></ion-icon>
       </ion-fab-button>
     </ion-fab>
-    <app-character-sheet [player]="player" *ngFor="let player of players" [hidden]="!isCurrentPlayer(player.id)">
+    <app-character-sheet (loadedPDF)="onPDFLoaded($event)">
+      <app-character-form [formGroup]="formGroup"  [inputList]="inputs" *ngFor="let player  of players"  [hidden]="!isCurrentPlayer(player.id)" ></app-character-form>
     </app-character-sheet>
 </ion-content>

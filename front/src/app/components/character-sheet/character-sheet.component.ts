@@ -1,9 +1,9 @@
-import { Component, Input} from '@angular/core';
-import { Player } from '../models';
+import { Component, Input, EventEmitter, Output} from '@angular/core';
 import { PDFDocumentProxy } from 'ng2-pdf-viewer';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
-import { InputForm } from './input-form';
+import { InputForm } from '../character-form/input-form';
 import { PDFAnnotationData } from 'pdfjs-dist';
+
 
 @Component({
   selector: 'app-character-sheet',
@@ -12,12 +12,12 @@ import { PDFAnnotationData } from 'pdfjs-dist';
 })
 export class CharacterSheetComponent {
 
-  @Input() player: Player;
+    @Output() loadedPDF = new EventEmitter<any>();
 
     // screen DPI / PDF DPI
     readonly dpiRatio = 96 / 72;
 
-    public pdfSrc = './assets//FATE.pdf';
+    public pdfSrc = '/assets/pdfs/Eirendor.pdf';
 
     public myForm: FormGroup;
 
@@ -63,19 +63,12 @@ export class CharacterSheetComponent {
         return formControl;
     }
 
-    private addInput(annotation: any, rect: number[] = null): void {
+    private addInput(form, annotation: any, rect: number[] = null): void {
         // add input to page
-        this.myForm.addControl(annotation.fieldName, this.createInput(annotation, rect));
+        form.addControl(annotation.fieldName, this.createInput(annotation, rect));
     }
 
-    public getInputPosition(input: InputForm): any {
-        return {
-            top: `${input.top}px`,
-            left: `${input.left}px`,
-            height: `${input.height}px`,
-            width: `${input.width}px`,
-        };
-    }
+
 
     public zoomIn(): void {
         this.inputList = this.inputList.map(i => {
@@ -112,27 +105,30 @@ export class CharacterSheetComponent {
                 // get the annotations of the current page
                 return p.getAnnotations();
             }).then(ann => {
-
-                // ugly cast due to missing typescript definitions
-                // please contribute to complete @types/pdfjs-dist
+                const formGroup = this._fb.group({});
+                
                 const annotations = (<any>ann) as PDFAnnotationData[];
                 console.log('annotations', annotations);
                 annotations
                     .filter(a => a.subtype === 'Widget') // get the form field annotation only
-                    .forEach(a => {
-                        console.log('InputData', a);
+                    .forEach(annotation => {
+                        console.log('InputData', annotation);
                         // get the rectangle that represent the single field
                         // and resize it according to the current DPI
                         const fieldRect = currentPage.getViewport(this.dpiRatio)
-                            .convertToViewportRectangle(a.rect);
+                            .convertToViewportRectangle(annotation.rect);
 
                         // add the corresponding input
-                        this.addInput(a, fieldRect);
+                        this.addInput(formGroup, annotation, fieldRect);
+
                     });
+                this.loadedPDF.emit({form: formGroup, inputs: this.inputList});
+                    
             });
         }
 }
   onError(error: any) {
     console.log('pdf error', error);
   }
+
 }

@@ -7,8 +7,9 @@ import { IonicModule } from '@ionic/angular';
 
 import { PlayersPage } from './players.page';
 
-import { CharacterSheetComponent } from '../character-sheet/character-sheet.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { CharacterSheetComponent } from '../components/character-sheet/character-sheet.component';
+import { CharacterFormComponent } from '../components/character-form/character-form.component';
 
 
 const routes: Routes = [
@@ -27,6 +28,6 @@ const routes: Routes = [
     ReactiveFormsModule,
     PdfViewerModule
   ],
-  declarations: [PlayersPage, CharacterSheetComponent]
+  declarations: [PlayersPage, CharacterSheetComponent, CharacterFormComponent]
 })
 export class PlayersPageModule {}

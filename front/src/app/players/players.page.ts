@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { CharacterSheetComponent } from './../character-sheet/character-sheet.component';
 import { Player } from '../models';
+import { PartyService } from '../services/party.service';
+import { Party } from '../models/party';
+import { Games } from '../models/games';
+import { InputForm } from '../components/character-form/input-form';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 
 
@@ -10,17 +14,19 @@ import { Player } from '../models';
   templateUrl: './players.page.html',
   styleUrls: ['./players.page.scss'],
 })
-export class PlayersPage implements OnInit {
+export class PlayersPage {
 
   lastId = 0;
   currentPlayer = 1;
   players: Player[] = [];
+  inputs: InputForm[] = []
+  formGroup: FormGroup;
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor(private partyService: PartyService, private _fb: FormBuilder) {
+    this.formGroup = this._fb.group({});
     this.addPlayer();
-  }
+    partyService.newParty('id', Games.FAE, this.players);
+   }
 
   getNewPlayerId() {
     this.lastId ++;
@@ -39,5 +45,13 @@ export class PlayersPage implements OnInit {
     console.log($event.detail.value);
     this.currentPlayer = $event.detail.value;
     console.log($event);
+  }
+
+  onPDFLoaded($event) {
+    console.log('onLOAD', $event);
+    this.formGroup = $event.formGroup;
+    this.players.forEach(player => {
+      this.inputs = $event.inputs;
+    })
   }
 }
