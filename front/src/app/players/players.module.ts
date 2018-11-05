@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
@@ -8,6 +8,9 @@ import { IonicModule } from '@ionic/angular';
 import { PlayersPage } from './players.page';
 
 import { CharacterSheetComponent } from '../character-sheet/character-sheet.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+
+
 const routes: Routes = [
   {
     path: '',
@@ -20,7 +23,9 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    ReactiveFormsModule,
+    PdfViewerModule
   ],
   declarations: [PlayersPage, CharacterSheetComponent]
 })
