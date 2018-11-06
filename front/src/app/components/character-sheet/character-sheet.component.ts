@@ -105,9 +105,9 @@ export class CharacterSheetComponent {
                 // get the annotations of the current page
                 return p.getAnnotations();
             }).then(ann => {
-                const formGroup = this._fb.group({});
+                const formControls = [];
                 
-                const annotations = (<any>ann) as PDFAnnotationData[];
+                const annotations = (<any>ann) ;
                 console.log('annotations', annotations);
                 annotations
                     .filter(a => a.subtype === 'Widget') // get the form field annotation only
@@ -119,10 +119,12 @@ export class CharacterSheetComponent {
                             .convertToViewportRectangle(annotation.rect);
 
                         // add the corresponding input
-                        this.addInput(formGroup, annotation, fieldRect);
+                        formControls.push({name: annotation.fieldName,
+                            formControl: this.createInput(annotation, fieldRect)
+                        });
 
                     });
-                this.loadedPDF.emit({form: formGroup, inputs: this.inputList});
+                this.loadedPDF.emit({formControls: formControls, inputs: this.inputList});
                     
             });
         }

@@ -19,13 +19,15 @@ export class PlayersPage {
   lastId = 0;
   currentPlayer = 1;
   players: Player[] = [];
-  inputs: InputForm[] = []
-  formGroup: FormGroup;
+  playerModel: Player;
+  inputs: InputForm[] = [];
+  formControls = [];
+  showForm = false;
 
   constructor(private partyService: PartyService, private _fb: FormBuilder) {
-    this.formGroup = this._fb.group({});
     this.addPlayer();
     partyService.newParty('id', Games.FAE, this.players);
+    this.playerModel = this.players[0];
    }
 
   getNewPlayerId() {
@@ -44,14 +46,14 @@ export class PlayersPage {
   changePlayer($event) {
     console.log($event.detail.value);
     this.currentPlayer = $event.detail.value;
+    this.playerModel = this.players.find(player => player.id === this.currentPlayer);
     console.log($event);
   }
 
   onPDFLoaded($event) {
     console.log('onLOAD', $event);
-    this.formGroup = $event.formGroup;
-    this.players.forEach(player => {
-      this.inputs = $event.inputs;
-    })
+    this.inputs = $event.inputs;
+    this.formControls = $event.formControls;
+    this.showForm = true;
   }
 }

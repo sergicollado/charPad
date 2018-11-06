@@ -1,35 +1,38 @@
 <div class="form-container" >
-  <form  [formGroup]="formGroup" class="player-form" novalidate>
+  <form  [formGroup]="characterFormGroup" class="player-form" novalidate>
 
   <!-- Cycle through all the inputs -->
-  <div *ngFor="let input of inputList; let i=index" [ngSwitch]="input.type">
+  <ng-container *ngIf="controlsCreated" >
 
-      <input *ngSwitchCase="'checkbox'" 
-          [name]="input.name" 
-          type="checkbox" 
-          [formControlName]="input.name" 
-          [value]="input.value" 
-          [ngStyle]="getInputPosition(input)">
+    <div *ngFor="let input of inputList; let i=index" [ngSwitch]="input.type">
+
+        <input *ngSwitchCase="'checkbox'" 
+            [name]="input.name" 
+            type="checkbox" 
+            [formControlName]="input.name" 
+            [value]="input.value" 
+            [ngStyle]="getInputPosition(input)">
 
 
-      <input *ngSwitchCase="'radio'" 
-          [name]="input.name" 
-          type="radio" 
-          [formControlName]="input.name" 
-          [value]="input.value" 
-          [ngStyle]="getInputPosition(input)">
+        <input *ngSwitchCase="'radio'" 
+            [name]="input.name" 
+            type="radio" 
+            [formControlName]="input.name" 
+            [value]="input.value" 
+            [ngStyle]="getInputPosition(input)">
 
-      <!-- Insert an input accordingly and get the style/position from the component -->
-      <input *ngSwitchDefault 
-          [name]="input.name" 
-          type="text" 
-          [formControlName]="input.name" 
-          [value]="input.value" 
-          [ngStyle]="getInputPosition(input)">
+        <!-- Insert an input accordingly and get the style/position from the component -->
+        <input *ngSwitchDefault 
+            [name]="input.name" 
+            type="text" 
+            [formControlName]="input.name" 
+            [value]="input.value" 
+            [ngStyle]="getInputPosition(input)">
 
-  </div>
+    </div>
+  </ng-container>
   </form>
 </div>
 
-<pre class="form-value">{{myGroup.value | json}}</pre>
+<pre class="form-value">{{ characterFormGroup.value | json}}</pre>
 

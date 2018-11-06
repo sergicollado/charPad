@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { Player } from '../../models';
 import { InputForm } from './input-form';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-character-form',
@@ -12,13 +12,18 @@ export class CharacterFormComponent implements OnInit {
   
   @Input() player: Player;
   @Input() inputList: InputForm[] = [];
-  @Input() formGroup = new FormGroup({});;
+  @Input() formControls: any[] = [];
+  controlsCreated = false;
 
-  myGroup = new FormGroup({});
+  characterFormGroup = new FormGroup({});
 
   constructor() { }
 
   ngOnInit() {
+    this.formControls.forEach(control => {
+      this.characterFormGroup.addControl(control.name, control.formControl);
+    });
+    setTimeout( () => this.controlsCreated = true, 2000);
   }
 
   public getInputPosition(input: InputForm): any {
@@ -28,5 +33,5 @@ export class CharacterFormComponent implements OnInit {
         height: `${input.height}px`,
         width: `${input.width}px`,
     };
-}
+  }
 }
