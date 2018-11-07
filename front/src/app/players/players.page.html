@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-segment (ionChange)="changePlayer($event)">
+  <ion-segment (ionChange)="changePlayer($event)" *ngIf="players.length > 0">
       <ion-segment-button *ngFor="let player  of players" [value]="player.id" [checked]="isCurrentPlayer(player.id)">
         {{player.name}} 
       </ion-segment-button>
@@ -16,9 +16,12 @@
         <ion-icon name="add"></ion-icon>
       </ion-fab-button>
     </ion-fab>
-    <app-character-sheet (loadedPDF)="onPDFLoaded($event)">
+    <app-character-sheet (loadedPDF)="onPDFLoaded($event)" [zoom]="zoom">
       <ng-container *ngIf="showForm" >
-        <app-character-form [player]="playerModel" [formControls]="formControls"  [inputList]="inputs" ></app-character-form>
+        <app-character-form [formGroup]="formGroup" [formControls]="formControls"  [inputList]="inputs" ></app-character-form>
       </ng-container>
     </app-character-sheet>
+    <button mat-mini-fab (click)="zoomIn()">+</button>
+    <button mat-mini-fab (click)="zoomOut()">-</button>
+
 </ion-content>

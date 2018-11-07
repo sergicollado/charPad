@@ -1,10 +1,10 @@
 <div class="form-container" >
-  <form  [formGroup]="characterFormGroup" class="player-form" novalidate>
+  <form  [formGroup]="formGroup" class="player-form" novalidate>
 
   <!-- Cycle through all the inputs -->
   <ng-container *ngIf="controlsCreated" >
 
-    <div *ngFor="let input of inputList; let i=index" [ngSwitch]="input.type">
+    <div *ngFor="let input of inputList.inputs; let i=index" [ngSwitch]="input.type">
 
         <input *ngSwitchCase="'checkbox'" 
             [name]="input.name" 
@@ -33,6 +33,4 @@
   </ng-container>
   </form>
 </div>
-
-<pre class="form-value">{{ characterFormGroup.value | json}}</pre>
 

@@ -13,6 +13,7 @@ export class CharacterFormComponent implements OnInit {
   @Input() player: Player;
   @Input() inputList: InputForm[] = [];
   @Input() formControls: any[] = [];
+  @Input() formGroup: FormGroup;
   controlsCreated = false;
 
   characterFormGroup = new FormGroup({});
@@ -20,9 +21,7 @@ export class CharacterFormComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.formControls.forEach(control => {
-      this.characterFormGroup.addControl(control.name, control.formControl);
-    });
+
     setTimeout( () => this.controlsCreated = true, 2000);
   }
 

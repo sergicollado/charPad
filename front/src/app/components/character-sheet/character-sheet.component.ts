@@ -1,8 +1,7 @@
 import { Component, Input, EventEmitter, Output} from '@angular/core';
 import { PDFDocumentProxy } from 'ng2-pdf-viewer';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
-import { InputForm } from '../character-form/input-form';
-import { PDFAnnotationData } from 'pdfjs-dist';
+import { FormControl, FormBuilder } from '@angular/forms';
+import { InputList } from '../../models/inputList';
 
 
 @Component({
@@ -11,7 +10,7 @@ import { PDFAnnotationData } from 'pdfjs-dist';
   styleUrls: ['./character-sheet.component.scss']
 })
 export class CharacterSheetComponent {
-
+    @Input() zoom = 1;
     @Output() loadedPDF = new EventEmitter<any>();
 
     // screen DPI / PDF DPI
@@ -19,14 +18,7 @@ export class CharacterSheetComponent {
 
     public pdfSrc = '/assets/pdfs/Eirendor.pdf';
 
-    public myForm: FormGroup;
-
-    public inputList: InputForm[] = [];
-
-    public zoom = 1;
-
     constructor(private _fb: FormBuilder) {
-        this.myForm = this._fb.group({});
      }
 
     private createInput(annotation: any, rect: number[] = null) {
@@ -59,37 +51,8 @@ export class CharacterSheetComponent {
             input.width = (rect[2] - rect[0]);
         }
 
-        this.inputList.push(input);
-        return formControl;
-    }
 
-    private addInput(form, annotation: any, rect: number[] = null): void {
-        // add input to page
-        form.addControl(annotation.fieldName, this.createInput(annotation, rect));
-    }
-
-
-
-    public zoomIn(): void {
-        this.inputList = this.inputList.map(i => {
-            i.left *= (.25 / this.zoom) + 1;
-            i.top *= (.25 / this.zoom) + 1;
-            i.width *= (.25 / this.zoom) + 1;
-            i.height *= (.25 / this.zoom) + 1;
-            return i;
-        });
-        this.zoom += .25;
-    }
-
-    public zoomOut(): void {
-        this.inputList = this.inputList.map(i => {
-            i.left *= 1 - (.25 / this.zoom);
-            i.top *= 1 - (.25 / this.zoom);
-            i.width *= 1 - (.25 / this.zoom);
-            i.height *= 1 - (.25 / this.zoom);
-            return i;
-        });
-        this.zoom -= .25;
+        return {control:formControl, input: input};
     }
 
     public loadComplete(pdf: PDFDocumentProxy): void {
@@ -106,25 +69,27 @@ export class CharacterSheetComponent {
                 return p.getAnnotations();
             }).then(ann => {
                 const formControls = [];
-                
+                const inputList = new InputList;
+
                 const annotations = (<any>ann) ;
                 console.log('annotations', annotations);
                 annotations
                     .filter(a => a.subtype === 'Widget') // get the form field annotation only
                     .forEach(annotation => {
-                        console.log('InputData', annotation);
                         // get the rectangle that represent the single field
                         // and resize it according to the current DPI
                         const fieldRect = currentPage.getViewport(this.dpiRatio)
                             .convertToViewportRectangle(annotation.rect);
 
+                        const createdInput = this.createInput(annotation, fieldRect);
                         // add the corresponding input
                         formControls.push({name: annotation.fieldName,
-                            formControl: this.createInput(annotation, fieldRect)
+                            formControl: createdInput.control
                         });
+                        inputList.push(createdInput.input);
 
                     });
-                this.loadedPDF.emit({formControls: formControls, inputs: this.inputList});
+                this.loadedPDF.emit({formControls: formControls, inputs: inputList});
                     
             });
         }

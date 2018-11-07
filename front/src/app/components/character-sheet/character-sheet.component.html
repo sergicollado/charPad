@@ -1,12 +1,8 @@
 <div class="sheet-container">
-  <pre class="form-value">{{myForm.value | json}}</pre>
 
   <ng-content></ng-content>
     
         <!-- Bind the zoom variable to the viewer component -->
     <pdf-viewer id="viewer" [src]="pdfSrc" [zoom]="zoom" (error)="onError($event)" (after-load-complete)="loadComplete($event)"></pdf-viewer>
-
-  <button mat-mini-fab (click)="zoomOut()">-</button>
-  <button mat-fab (click)="zoomIn()">+</button>
     
 </div>
