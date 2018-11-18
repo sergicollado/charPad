@@ -5,6 +5,7 @@ export class Party {
     currentPlayer: Player;
     constructor(
         public id: string,
+        public name: string,
         public game: Games,
         public players: Array<Player>) {
             this.currentPlayer = players[0];

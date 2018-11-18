@@ -13,8 +13,8 @@ export class PartyService {
     return this.partyList[partyId];
   }
 
-  newParty(id, game, players) {
-    const party = new Party(id, game, players);
+  newParty(id, name, game, players) {
+    const party = new Party(id, name, game, players);
     this.partyList.parties.push(party);
     this.currentParty = party;
   }

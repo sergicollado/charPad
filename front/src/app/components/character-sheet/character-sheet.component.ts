@@ -2,6 +2,7 @@ import { Component, Input, EventEmitter, Output} from '@angular/core';
 import { PDFDocumentProxy } from 'ng2-pdf-viewer';
 import { FormControl, FormBuilder } from '@angular/forms';
 import { InputList } from '../../models/inputList';
+import { Games } from '../../models/games';
 
 
 @Component({
@@ -11,12 +12,11 @@ import { InputList } from '../../models/inputList';
 })
 export class CharacterSheetComponent {
     @Input() zoom = 1;
+    @Input() pdfSrc: Games;
     @Output() loadedPDF = new EventEmitter<any>();
 
     // screen DPI / PDF DPI
     readonly dpiRatio = 96 / 72;
-
-    public pdfSrc = '/assets/pdfs/Eirendor.pdf';
 
     constructor(private _fb: FormBuilder) {
      }
