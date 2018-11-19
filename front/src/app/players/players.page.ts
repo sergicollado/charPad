@@ -7,6 +7,9 @@ import { InputList } from '../models/inputList';
 import { Party } from '../models/party';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
+import { RouterInitializer } from '@angular/router/src/router_module';
+import { Storage } from '@ionic/storage';
+import { PartyStorageService } from '../services/party-storage.service';
 
 
 
@@ -33,7 +36,8 @@ export class PlayersPage  implements OnInit{
 
   constructor(private partyService: PartyService,
     public loadingController: LoadingController,
-    private router: Router) {
+    private router: Router,
+    private storage: PartyStorageService) {
     }
     
     ngOnInit() {
@@ -102,14 +106,15 @@ export class PlayersPage  implements OnInit{
       const player = this.currentPlayer;
       if (player) {
         this.currentPlayer.values = values;
+
         console.log('current player', player.values);
       }
     });
     this.showForm = true;
     setTimeout(() => {
-      this.changePlayer({ detail: {value:  this.currentPlayer }})
+      this.changePlayer({ detail: {value:  this.currentPlayer }});
       this.loading.dismiss();
-    }, 5000);
+    }, 3000);
   }
 
   zoomIn() {
@@ -117,5 +122,8 @@ export class PlayersPage  implements OnInit{
   }
   zoomOut() {
     this.inputs.zoomOut();
+  }
+  save() {
+    this.storage.saveParty(this.party);
   }
 }

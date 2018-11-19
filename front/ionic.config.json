@@ -1,5 +1,7 @@
 {
   "name": "charPad",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

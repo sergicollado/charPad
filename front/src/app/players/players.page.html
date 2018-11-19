@@ -19,6 +19,11 @@
         <ion-icon name="add"></ion-icon>
       </ion-fab-button>
     </ion-fab>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="save()">
+        <ion-icon name="document"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
     <app-character-sheet pdfSrc="{{ party.game }}" (loadedPDF)="onPDFLoaded($event)" [zoom]="zoom">
       <ng-container *ngIf="showForm" >
         <app-character-form [formGroup]="formGroup" [formControls]="formControls"  [inputList]="inputs" ></app-character-form>
